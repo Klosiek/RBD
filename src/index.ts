@@ -1,7 +1,10 @@
 import "reflect-metadata";
 import { userName, password, connectionString } from "./constants";
 import { createConnection } from "typeorm";
-import { User } from "./entities/User";
+import express from "express";
+import { RequestData } from "./models/RequestData";
+import { HistoricalData } from "./entities/HistoricalData";
+import { Bill } from "./entities/Bill";
 
 const main = async () => {
   const conn = await createConnection({
@@ -11,21 +14,46 @@ const main = async () => {
     password: password,
     logging: true,
     synchronize: true,
-    entities: [User],
+    entities: [HistoricalData, Bill],
   });
 
-  const repository = conn.getRepository(User);
+  const billsRepository = conn.getRepository(Bill);
 
-  const mati = new User();
-  mati.firstName = "Mateusz";
-  mati.lastName = "Karakan";
-  mati.isActive = mati.lastName.toLocaleLowerCase().substr(0, 4) === "kara";
+  const addUserToDatabase = async (req: RequestData) => {
+    // if (req.Data) {
 
-  await repository.save(mati);
+    for (const x of req.Data) {
+      // await billsRepository.save(x);
 
-  const getUsers = await User.find();
+      // const newPost = billsRepository.create();
 
-  console.dir(getUsers);
+      await billsRepository.save({ ...x.Bills, UserData: x });
+    }
+    // req.Data.forEach(async (x) => {
+    //   await usersRepository.save(x);
+    // });
+
+    // await Promise.(promises);
+    // }
+
+    // req.data.map((element) => {
+    //   usersRepository.save(element);
+    // });
+  };
+
+  //   const getUsers = await User.find();
+
+  const app = express();
+  const port = 3000;
+  app.use(express.json());
+
+  app.post("/", (req, res) => {
+    console.dir(req.body);
+    addUserToDatabase(req.body);
+    res.send("zayebiscie");
+  });
+
+  app.listen(port);
 };
 
 main();

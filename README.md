@@ -8,6 +8,12 @@ npm install --global yarn
 ``````
 to install yarn
 
-Endpoints: 
+Start the project
+``````
+yarn start
+``````
+Enjoy!
+
+## Endpoints: 
 ```jsx
 ```

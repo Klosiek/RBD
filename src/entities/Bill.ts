@@ -17,14 +17,14 @@ export class Bill extends BaseEntity {
   Type: BillType;
 
   @Column()
-  Paid: number;
+  Paid: boolean;
 
-  @Column()
+  @Column({ nullable: true })
   PaymentDate: Date;
 
-  @Column()
+  @Column({ type: "float" })
   Amount: number;
 
   @ManyToOne(() => HistoricalData, (x) => x.Bills)
-  UserData: HistoricalData;
+  HistoricalData: HistoricalData;
 }

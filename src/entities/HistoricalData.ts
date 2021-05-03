@@ -31,6 +31,6 @@ export class HistoricalData extends BaseEntity {
   @Column()
   RenovationFundContribution: number;
 
-  @OneToMany(() => Bill, (x) => x.UserData)
+  @OneToMany(() => Bill, (x) => x.HistoricalData, { cascade: true })
   Bills: Bill[];
 }

@@ -4,7 +4,9 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "start": "ts-node-dev src/index.ts"
+    "start": "ts-node-dev src/index.ts",
+    "build-ts": "tsc",
+    "postinstall": "npm run build-ts"
   },
   "dependencies": {
     "@types/express": "^4.17.11",
